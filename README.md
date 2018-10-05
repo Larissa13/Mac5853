@@ -16,6 +16,7 @@
 
 # Create database
 `sudo -u postgres psql`
+`ALTER USER postgres WITH ENCRYPTED PASSWORD 'password';` 
 `CREATE DATABASE forbidden_db;`
 
 # Create models and populate database
