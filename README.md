@@ -16,9 +16,14 @@
 
 # Create database
 `sudo -u postgres psql`
+
 `ALTER USER postgres WITH ENCRYPTED PASSWORD 'password';` 
+
 `CREATE DATABASE forbidden_db;`
 
 # Create models and populate database
 `python manage.py db init`
+
 `python manage.py db migrate`
+
+`python populate.py`
