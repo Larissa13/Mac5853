@@ -1,0 +1,46 @@
+<!doctype html>
+
+<head>
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<body>
+
+    <div class='container'>
+
+
+
+        <div class='title'>
+            Forbidden Content Detector
+        </div>
+
+        <div class='subtitle'>
+            Type an URL and press Submit.
+            <br>
+            A Machine Learning model will analyse the website and classify it's content
+        </div>
+
+
+        <form method="post">
+            <div class="form-input">
+ 
+                <input class="text" name="url" id="url" value="{{ request.form['url'] }}" required>
+                <label for="url">URL</label>
+            </div>
+
+            <input type="submit" value="Submit" class='submit-button'>
+
+            <div class="form-input keywords">
+                <label for="keywords">keywords (optional, comma separated)</label>
+                <input class="text" name="keywords" id="keywords" value="{{ request.form['keywords'] }}">
+            </div>
+
+            <input type="checkbox" name="forcecalc" id="forcecalc" value="{{ request.form['forcecalc'] }}" />
+
+        </form>
+
+
+
+
+    </div>
+</body>

@@ -1,8 +1,8 @@
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.types import ARRAY
 from datetime import datetime
+from app import db
 
-db = SQLAlchemy()
+
 
 
 class Request(db.Model):
