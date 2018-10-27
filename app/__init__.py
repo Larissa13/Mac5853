@@ -26,14 +26,26 @@ from app.models import Request, Keyword, Label
 
 @app.route('/', methods=('GET', 'POST'))
 def index():
+    status_dict = {'done':('success', '100'), 'calculating':('warning', '50'),
+                   'allocating worker':('danger', '25'), 'formulating answer':('info', '75')}
+
+    #TEMP VALUES
+    key = 'done'
+    status = status_dict[key]
+    veredict = 'RESTRICTED'
+    expl_words = ['cigarro', 'tabaco', 'tragar']
+    label = 'Cigarros'
+    #TEMP VALUES
+
     print("ola")
     if request.method == 'POST':
-        print("hey asas")
+        print("hey fat cats")
         url = request.form['url']
         keywords = request.form['keywords']
-        force_calc = request.form.get('question')
+        force_calc = request.form.get('forcecalc')
 
         print(url, keywords, force_calc)
 
-    return render_template('index.html')
+    return render_template('index.html', status=status, key=key,
+                           veredict=veredict, expl_words=expl_words, label=label)
 

@@ -2,8 +2,12 @@
 
 <head>
 </head>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <body>
 
     <div class='container'>
@@ -21,25 +25,74 @@
         </div>
 
 
+        <div class="progress">
+            <div class="{{ 'progress-bar progress-bar-' + status[0] }}" role="progressbar" aria-valuenow="{{ status[1] }}"
+                 aria-valuemin="0" aria-valuemax="100" style="{{ 'width:' + status[1] + '%' }}">
+                {{ key }}
+            </div>
+        </div>
+
+
         <form method="post">
             <div class="form-input">
- 
-                <input class="text" name="url" id="url" value="{{ request.form['url'] }}" required>
-                <label for="url">URL</label>
+                
+                <input class="text" name="url" id="url" onfocus="if (this.value=='URL') this.value = ''" onfocusout="if (this.value=='') this.value = 'URL'" value="URL" required>
+                
             </div>
 
             <input type="submit" value="Submit" class='submit-button'>
 
             <div class="form-input keywords">
-                <label for="keywords">keywords (optional, comma separated)</label>
-                <input class="text" name="keywords" id="keywords" value="{{ request.form['keywords'] }}">
+                <input class="text" name="keywords" id="keywords" onfocus="if (this.value=='keywords (optional, comma separated)') this.value = ''" onfocusout="if (this.value=='') this.value = 'keywords (optional, comma separated)'" value="keywords (optional, comma separated)">
             </div>
 
-            <input type="checkbox" name="forcecalc" id="forcecalc" value="{{ request.form['forcecalc'] }}" />
+            <div class="checkbox-wrap">
 
+                <label for="forcecalc">Force Recalculation
+                    <input type="checkbox" name="forcecalc" id="forcecalc" value="{{ request.form['forcecalc'] }}" />
+                    <span class="checkmark"></span>
+                </label>
+            </div>
         </form>
 
+        {% if status[0] == 'success' %}
+            <div class="title veredict">
+                Veredict:
+                <span class="{{ 'title veredict ' + veredict }}"> {{ veredict }}</span>
+            </div>
 
+            
+
+
+            <div class="'explanation-title">
+                Explanation:
+            </div>
+
+            {% if veredict == 'RESTRICTED' %}
+            <div class="explanation-text">
+                The entered website contains, among others, the following words:
+            </div>
+            <div class="explanation-words">
+                <ul>
+                {% for word in expl_words %}
+                <li>
+                    {{ word }}
+                </li>
+                {% endfor %}
+                </ul>
+            </div>
+
+            <div class="explanation-text">
+                Which are highly related to:
+                <span class="{{ 'title veredict ' + veredict }}"> {{ label }}</span>
+                which is forbidden content
+            </div>
+
+            {% endif %}
+
+
+
+            {% endif %}
 
 
     </div>

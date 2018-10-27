@@ -4,12 +4,15 @@
   margin-top: 10%
 }
 
+
+/* --------------------------------------- Page Title*/
+
 .title {
   color: #47525E;
   font-family: Lato;
   font-size: 50px;
   font-weight: 700;
-  width: 502px;
+  width: 450px;
   text-align: center;
   margin: auto
 }
@@ -20,24 +23,54 @@
   font-size: 21px;
   font-weight: 300;
   line-height: 34px;
-  width: 400px;
+  width: 450px;
   text-align: center;
   margin: auto;
   margin-bottom: 15%;
 }
 
+
+.veredict {
+    font-size:30px;
+}
+
+.RESTRICTED {
+    color: #F78510
+}
+
+.PERMITTED{
+    color: #50C821
+}
+
+
+/*------------------progress bar*/
+.progress {
+    width:450px;
+}
+
+
+
+
+
+/* URL and keywords - ---------------- Form text inputs*/
+
+form {
+    width: 450px;
+}
+
+
 .submit-button {
   background-color: #47525E;
   border-radius: 5px;
   width: 148px;
-  height: 54.64px;
+  height: 49px;
   color: #FFFFFF;
   font-family: Lato;
   font-size: 22px;
   font-weight: 400;
-  line-height: 62px;
   text-align: center;
-  float: right
+  float: right;
+  margin-top: -2px;
 }
 
 .text {
@@ -51,45 +84,129 @@
   line-height: 62px;
   text-align: left;
   position: relative; z-index: 2;
-  height: 30px;
+  height: 45px;
   background: transparent;
-
+  width:285px;
+  padding-left: 5px;
 
 }
+
 label {
-  color: #8190A5;
+    color: #8190A5;
   font-family: Lato;
   font-size: 18px;
   font-weight: 400;
   line-height: 62px;
+
+}
+
+
+.form-input label {
   width: 0px;
   text-align: left;
   position: absolute;
   z-index: 1;
   top: 0;
-  margin-top:-6%;
-  margin-left:5%;
+  margin-top:-8px;
+  margin-left:7px;
 }
 
 .form-input {
   position:relative;
   background: transparent;
   border: 1px solid #8492A6;
-  border-radius: 5px;
-  width: 250.79px;
+  border-radius: 4px;
+  width: 285px;
   height: 5%;
-  margin: 5% auto auto auto;
   float: left;
 }
 
 .keywords{
-    width: 418px;
+    width: 450px;
+    margin: 5% auto auto auto;
 }
 
-#force-calc{
-  background-color: #FFFFFF;
-  border: 2px solid #8492A6;
-  border-radius: 100%;
-  width: 22px;
-  height: 22px;
+.keywords label{
+    width: 400px;
+}
+
+.keywords input{
+    width: 450px;
+}
+
+
+/*Force calculation ----------- Checkbox */
+
+
+.checkbox-wrap{
+    clear:both;
+    margin-top: 5%;
+}
+
+.checkbox-wrap label{
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+.checkbox-wrap label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  margin-top:20px;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-wrap:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-wrap input:checked ~ .checkmark {
+  background-color: #47525E;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-wrap input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-wrap .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
