@@ -61,10 +61,8 @@
                 <span class="{{ 'title veredict ' + veredict }}"> {{ veredict }}</span>
             </div>
 
-            
-
-
-            <div class="'explanation-title">
+            <div class="explanation">
+            <div class="explanation-text explanation-title">
                 Explanation:
             </div>
 
@@ -72,7 +70,7 @@
             <div class="explanation-text">
                 The entered website contains, among others, the following words:
             </div>
-            <div class="explanation-words">
+            <div class="{{ 'explanation-words ' + veredict }}">
                 <ul>
                 {% for word in expl_words %}
                 <li>
@@ -83,11 +81,25 @@
             </div>
 
             <div class="explanation-text">
-                Which are highly related to:
-                <span class="{{ 'title veredict ' + veredict }}"> {{ label }}</span>
+                That are highly related to:
+                
+            </div>
+
+            <div class="{{ 'title veredict veredict-label ' + veredict }}"> {{ label }}</div>
+            
+
+            <div class="explanation-text">
                 which is forbidden content
             </div>
 
+            </div>
+
+
+            {% else %}
+                <div class="explanation-text explanation-title">
+                    The content of the entered website is classified as permitted
+                </div>
+           
             {% endif %}
 
 

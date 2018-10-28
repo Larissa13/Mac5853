@@ -30,23 +30,17 @@
 }
 
 
-.veredict {
-    font-size:30px;
-}
 
-.RESTRICTED {
-    color: #F78510
-}
-
-.PERMITTED{
-    color: #50C821
-}
 
 
 /*------------------progress bar*/
 .progress {
     width:450px;
 }
+
+
+
+
 
 
 
@@ -210,3 +204,56 @@ label {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+
+/*------------------------- Veredict -----------------------------*/
+
+
+.veredict {
+    font-size: 42px;
+}
+
+.veredict-label {
+    width: 410px;
+}
+
+.RESTRICTED {
+    color: #F78510
+}
+
+.PERMITTED{
+    color: #50C821
+}
+
+
+.explanation {
+    background-color: #eee;
+  width: 450px;
+  height: 20%;
+  padding: 20px;
+  margin-top: 50px;
+  margin-bottom:30px;
+}
+
+.explanation-text {
+color: #47525E;
+  font-family: Lato;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: left;
+      margin-top: 35px;
+}
+
+.explanation-title {
+    font-size: 25px;
+    margin-top: 0;
+}
+
+.explanation-words {
+    font-family: Lato;
+  font-size: 20px;
+  font-weight:400;
+}
+
+

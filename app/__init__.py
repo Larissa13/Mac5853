@@ -32,7 +32,7 @@ def index():
     #TEMP VALUES
     key = 'done'
     status = status_dict[key]
-    veredict = 'RESTRICTED'
+    veredict = 'PERMITTED'
     expl_words = ['cigarro', 'tabaco', 'tragar']
     label = 'Cigarros'
     #TEMP VALUES
