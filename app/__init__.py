@@ -34,7 +34,7 @@ def search_db(url):
 def result_from_db(req):
     if req.keywords:
         label = req.keywords[0].name
-        expl_words = [kw.word fort kw in req.keywords]
+        expl_words = [kw.word for kw in req.keywords]
         veredict = 'RESTRICTED'
     else:
         label, expl_words = None, None
@@ -43,16 +43,15 @@ def result_from_db(req):
     return label, expl_words, veredict
 
 
-def get_result(url, force_calc, callback=None):
+def get_result(urls, force_calc, callback=None):
 
     last_calc = search_db(url)
 
     if not force_calc and last_calc is not None:
-        return result_from_db(last_calc), 'done'
+        return result_from_db(last_calc), 'done', 'False'
     else:
-        #call classifier
-        print(url, keywords, force_calc, callback)
-        return None, None, None, 'calculating'
+        Process(target=call_cls, args=(urls, callback)).start()
+        return None, None, None, 'calculating', 'True'
 
 
 def update_or_create_kws(words, vecs, req):
@@ -79,6 +78,8 @@ def index():
     label = 'Cigarros'
     #TEMP VALUES
 
+
+    ws_on = 'False'
     status = status_dict[key]
 
     if request.method == 'POST':
@@ -87,13 +88,9 @@ def index():
             in_json = request.get_json(force=True)
             sites = in_json['sites']
             callback = in_json['callback']
-            results = []
-            for url in sites:
-                _, _, _, key = get_result(url, True, callback=callback)
+            _, _, _, key, _ = get_result(sites, True, callback=callback)
 
-            #ans = {"sites":[{"url":url, "restrict":(label is not None), "reasons":expl_words} for url, label, expl_words, veredict, _ in results]}
-            #ta errado, algumas urls podem ja existir e outras nao. Force calc em todas??
-
+            #TODO answer with status
         else:
 
             url = request.form['url']
@@ -101,7 +98,7 @@ def index():
             force_calc = request.form.get('forcecalc')
             if force_calc is None: force_calc = False
 
-            label, expl_words, veredict, key = get_results(url, force_calc)
+            label, expl_words, veredict, key, ws_on = get_results([url], force_calc)
 
     else:
         key = request.args.get('key')
@@ -121,7 +118,57 @@ def index():
         db.session.commit()
 
     return render_template('index.html', status=status, key=key,
-                           veredict=veredict, expl_words=expl_words, label=label)
+                           veredict=veredict, expl_words=expl_words, label=label, ws_on=ws_on)
+
+
+
+ZMQ_LISTENING_PORT = 6557
+sockets = Sockets(app)
+context = zmq.Context()
+
+
+@app.route('/prepare')
+def prepare():
+    socket = context.socket(zmq.REQ)
+    socket.connect('tcp://localhost:{PORT}'.format(PORT=ZMQ_LISTENING_PORT))
+    socket.send_string('send results')
+    results = socket.recv()
+    print(results)
+
+    return redirect(url_for("index"), **result)
+
+@sockets.route('/answer')
+def send_data(ws):
+    logger.info('Got a websocket connection, sending up data from zmq')
+    socket = context.socket(zmq.REQ)
+    socket.connect('tcp://localhost:{PORT}'.format(PORT=ZMQ_LISTENING_PORT))
+    gevent.sleep()
+
+    while True:
+        socket.send_string("send status")
+        received = socket.recv()
+        data = json.loads(received.decode('utf-8'))
+        logger.info(data)
+        ws.send(received)
+        gevent.sleep()
+
+
+
+from  multiprocessing import Process
+
+
+def call_cls(urls, callback=None):
+    context = zmq.Context()
+    socket = context.socket(zmq.REP)
+    socket.bind('tcp://*:{PORT}'.format(PORT=ZMQ_LISTENING_PORT))
+
+    #for i in range(5):
+    #    a = socket.recv()
+    #    print(a)
+    #    print(i)
+    #    socket.send_string(json.dumps(dict(i=i))) 
+    #    gevent.sleep(1)
+
 
 
 
@@ -136,4 +183,9 @@ def answer(callback, result):
 
 
 
+if __name__ == '__main__':
+    from gevent import pywsgi
+    from geventwebsocket.handler import WebSocketHandler
+    server = pywsgi.WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
+    server.start()
 
