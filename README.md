@@ -14,12 +14,14 @@
 
 `pip install psycopg2`
 
+`pip install flask_sockets`
+
 # Create database
 `sudo -u postgres psql`
 
-`ALTER USER postgres WITH ENCRYPTED PASSWORD 'password';` 
+`ALTER USER postgres PASSWORD 'password';` 
 
-`CREATE DATABASE forbidden_db;`
+`CREATE DATABASE forbidden;`
 
 # Create models and populate database
 `python manage.py db init`

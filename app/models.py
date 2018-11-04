@@ -3,8 +3,8 @@ from datetime import datetime
 from app import db
 
 request_keyword = db.Table('request_keyword',
-                           db.Column('request_id', db.Integer, db.ForeignKey('requests.request_id')),
-                           db.Column('keyword_word', db.String(50), db.ForeignKey('keywords.keyword_word')))
+                           db.Column('keyword_word', db.String(50), db.ForeignKey('keyword.word')),
+                           db.Column('request_id', db.Integer, db.ForeignKey('request.id')))
 
 
 class Request(db.Model):
@@ -18,7 +18,7 @@ class Request(db.Model):
 class Keyword(db.Model):
     __tablename__ = 'keyword'
     word = db.Column(db.String(50), primary_key=True)
-    vector = db.Column(ARRAY(db.Float), nullable=False)
+    #vector = db.Column(ARRAY(db.Float), nullable=False)
 
     label_name = db.Column(db.String(50), db.ForeignKey('label.name'))
     requests = db.relationship(Request, backref='keywords', secondary=request_keyword)
