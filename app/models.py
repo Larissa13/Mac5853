@@ -2,6 +2,7 @@ from sqlalchemy.types import ARRAY
 from datetime import datetime
 from app import db
 
+
 request_keyword = db.Table('request_keyword',
                            db.Column('request_id', db.Integer, db.ForeignKey('requests.request_id')),
                            db.Column('keyword_word', db.String(50), db.ForeignKey('keywords.keyword_word')))

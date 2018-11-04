@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
+def create_app():
+    pass
 
 app = Flask(__name__)
 
@@ -22,8 +24,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 db.app = app
 db.init_app(app)
 
-
-
 from app.models import Request, Keyword, Label
 
 
@@ -34,7 +34,7 @@ def search_db(url):
 def result_from_db(req):
     if req.keywords:
         label = req.keywords[0].name
-        expl_words = [kw.word fort kw in req.keywords]
+        expl_words = [kw.word for kw in req.keywords]
         veredict = 'RESTRICTED'
     else:
         label, expl_words = None, None
