@@ -81,3 +81,4 @@ class Classifier:
         yield self.status
 
         yield self.prepare_result(result, url, kws_thresh, key_results)
+
