@@ -20,10 +20,6 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 def create_app():
-<<<<<<< HEAD
-    pass
-=======
->>>>>>> 8198fc541f58cfdd3d343f3075a85ab231080aab
 
 
     app = Flask(__name__)
@@ -32,29 +28,7 @@ def create_app():
     db = SQLAlchemy()
 
     app.config['DEBUG'] = True
-<<<<<<< HEAD
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
-    %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
-
-<<<<<<< HEAD
-from app.models import Request, Keyword, Label
-
-
-def search_db(url):
-    return Request.query.filter_by(url=url).first()
-
-
-def result_from_db(req):
-    if req.keywords:
-        label = req.keywords[0].name
-        expl_words = [kw.word for kw in req.keywords]
-        veredict = 'RESTRICTED'
-    else:
-        label, expl_words = None, None
-=======
-=======
     
->>>>>>> 0ff95e5376fa2eaba49ef73c96e6d7d32c886f71
     db.app = app
     db.init_app(app)
 
@@ -67,7 +41,6 @@ def result_from_db(req):
 
         #TEMP VALUES
         #key = 'done'
->>>>>>> 8198fc541f58cfdd3d343f3075a85ab231080aab
         veredict = 'PERMITTED'
         expl_words = ['cigarro', 'tabaco', 'tragar']
         label = 'Cigarros'
@@ -166,5 +139,4 @@ context = zmq.Context()
 ZMQ_LISTENING_PORT = 6557
 
 from app.utils import *
-
 
