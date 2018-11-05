@@ -20,6 +20,15 @@ Ou vá no link [para download](https://github.com/Larissa13/Mac5853/archive/mast
 ## Como executar o sistema 
 Abra a pasta do sistema 
 
+Execute o comando python execute.py
+Aguarde que apareça as mensagens 
+> loading w2v
+> finished loading
+
+Vá no browser e digite 127.0.0.1:5000
+
+Então, é possível utiizar o sistema, via interface gráfica.
+
 # Como utilizar o sistema
 
 
@@ -48,6 +57,8 @@ Abra a pasta do sistema
 `pip install requests`
  
 `pip install beautifulsoup4`
+
+`pip install lxml`
 
  # Create models and populate database
 
