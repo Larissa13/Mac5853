@@ -39,7 +39,7 @@ Então, é possível utiizar o sistema, via interface gráfica.
 
 No campo *URL* é possível incluir a url a ser testada.
 Para executar o classificador, basta apertar, então, o botão *submit*.
-Como os resultados da classificação das urls vistas são salvos no banco de dados, caso o usuário deseje que a classificação de uma dada url seja classificada novamente, basta que após incluir a url no campo *URL*, ele selecione também a checkbox *force calculation* e aperte *submit*..
+Como os resultados da classificação das urls vistas são salvos no banco de dados, caso o usuário deseje que a classificação de uma dada url seja classificada novamente, basta que após incluir a url no campo *URL*, ele selecione também a checkbox *force calculation* e aperte *submit*.
 
 ![Imagem resultado permitido](/images/ans_perm.png "Imagem resultado permitido")
 
@@ -51,7 +51,12 @@ Como os resultados da classificação das urls vistas são salvos no banco de da
 
 
 
-## Dependências
+# Como executar os testes de unidade e funcionais
+Na pasta do projeto, execute `pytest` 
+Depois, abra a pasta app com `cd app` e execute o comando `pytest`
+Caso queira executar cada teste separadamente, faça `python [nome do arquivo de teste].py`
+
+# Dependências
 `pip install flask_sqlalchemy`
 
 `pip install Flask-Migrate`
@@ -81,5 +86,3 @@ Como os resultados da classificação das urls vistas são salvos no banco de da
 `pip install lxml`
 
 `python -m spacy download pt`
-
-`pip install`
