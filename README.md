@@ -20,18 +20,28 @@ Ou vá no link [para download](https://github.com/Larissa13/Mac5853/archive/mast
 ## Como executar o sistema 
 Abra a pasta do sistema 
 
-Execute o comando python execute.py
+Execute para popular a base de dados `python populate.py`
+
+Execute o comando `python execute.py`
+
 Aguarde que apareça as mensagens 
+
 > loading w2v
+
 > finished loading
 
-Vá no browser e digite 127.0.0.1:5000
+Vá no browser e digite 127.0.0.1:5000 ou localhost:5000
 
 Então, é possível utiizar o sistema, via interface gráfica.
 
 # Como utilizar o sistema
 
+No campo *URL* é possível incluir a url a ser testada.
+Para executar o classificador, basta apertar, então, o botão *submit*.
+Como os resultados da classificação das urls vistas são salvos no banco de dados, caso o usuário deseje que a classificação de uma dada url seja classificada novamente, basta que após incluir a url no campo *URL*, ele selecione também a checkbox *force calculation* e aperte *submit*.
 
+
+## Dependências
 `pip install flask_sqlalchemy`
 
 `pip install Flask-Migrate`
@@ -61,7 +71,3 @@ Então, é possível utiizar o sistema, via interface gráfica.
 `pip install lxml`
 
 `python -m spacy download pt`
-
- # Create models and populate database
-
-`python populate.py`

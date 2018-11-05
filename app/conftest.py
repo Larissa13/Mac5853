@@ -7,6 +7,8 @@ from app import app, create_app
 from app import db as _db
 import pytest
 
+from app.models import Request, Keyword, Label
+
 class TestConfig(object):
     DEBUG = True
     TESTING = True
@@ -15,7 +17,7 @@ class TestConfig(object):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     
-
+'''
 @pytest.yield_fixture(scope='session')
 def app():
     _app = Flask(__name__)
@@ -36,22 +38,37 @@ def app():
         yield _app
 
         ctx.pop()
+'''
+
+@pytest.yield_fixture(scope='session')
+def app2():
+    flask_app, db = create_app(TestConfig)
+    ctx = flask_app.app_context()
+    ctx.push()
+
+    db.flask_app = flask_app
+    db.init_app(flask_app)
+
+    yield flask_app
+
+    ctx.pop()
+
 
 
 @pytest.fixture(scope='module')
-def testapp():
-    flask_app, db = create_app(TestConfig)
-    test_client = flask_app.test_client()
+def testapp(app2):
+    #flask_app, db = create_app(TestConfig)
+    test_client = app2.test_client()
    
-    ctx = flask_app.app_context()
+    ctx = app2.app_context()
     ctx.push()
     yield test_client
     ctx.pop()
 
 
 @pytest.yield_fixture(scope='session')
-def db(app):
-    _db.app = app
+def db(app2):
+    _db.app2 = app2
     _db.create_all()
 
     yield _db
