@@ -1,6 +1,6 @@
 import unittest as ut
 
-from parser import *
+from app.parser import *
 
 class TestPreProcessTextMethods(ut.TestCase):
     

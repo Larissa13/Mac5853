@@ -1,6 +1,7 @@
 import unittest as ut 
-from classifier import *
+from app.classifier import *
 import numpy as np
+from app.models import Keyword
 import os
 import pickle
 
@@ -25,7 +26,10 @@ class TestClassifier(ut.TestCase):
 		self.assertTrue(self.classifier.model.similarity('cigarro', 'fumar') > 0.65)
 
 	def test_calc_dists(self):
-		self.assertTrue((self.classifier.calc_dists('arma', ['munição', 'pistola', 'espingarda']) == np.array([0.677431  , 0.6866069 , 0.71047467], dtype='float32')).all())
+		kw1 = Keyword(word = 'munição', requests=[])
+		kw2 = Keyword(word = 'pistola', requests=[])
+		kw3 = Keyword(word = 'espingarda', requests=[])
+		self.assertTrue((self.classifier.calc_dists('arma', [kw1, kw2, kw3]) == np.array([0.677431  , 0.6866069 , 0.71047467], dtype='float32')).all())
 
 
 if __name__ == '__main__':
