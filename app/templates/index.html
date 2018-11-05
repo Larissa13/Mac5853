@@ -1,31 +1,48 @@
 <!doctype html>
 
 <head>
-    
+
 </head>
 <div id="ws_on" class="{{ ws_on  }}"></div>
 <script type="text/javascript">
 
  if (document.getElementById('ws_on').classList.contains('True')) {
      var ws = new WebSocket("ws://localhost:5000/answer");
-     
+
      ws.onmessage = function(evt) {
-         
+
          var data = JSON.parse(evt.data);
          var prog = document.getElementById("prog");
-         
+
          switch (data["status"]){
+             case "error":
+                 document.getElementById("prog").innerHTML = "ERROR";
+                 prog.classList.add("progress-bar-danger");
+                 if (prog.classList.contains("progress-bar-warning")){
+                     prog.classList.remove("progress-bar-warning");
+                 }
+                 if (prog.classList.contains("progress-bar-info")){
+                     prog.classList.remove("progress-bar-info");
+                 }
+                 if (prog.classList.contains("progress-bar-success")){
+                     prog.classList.remove("progress-bar-success");
+                 }
+                 prog.setAttribute("aria-valuenow", '100');
+                 prog.setAttribute("style",'width:100%');
+                 ws.close();
+                 break;
+
              case "formulating answer":
-                 
-                 prog.classList.add("info");
-                 if (prog.classList.contains("warning")){
-                     prog.classList.remove("warning");
+                 document.getElementById("prog").innerHTML = "formulating answer";
+                 prog.classList.add("progress-bar-info");
+                 if (prog.classList.contains("progress-bar-warning")){
+                     prog.classList.remove("progress-bar-warning");
                  }
-                 if (prog.classList.contains("danger")){
-                     prog.classList.remove("danger");
+                 if (prog.classList.contains("progress-bar-danger")){
+                     prog.classList.remove("progress-bar-danger");
                  }
-                 if (prog.classList.contains("success")){
-                     prog.classList.remove("success");
+                 if (prog.classList.contains("progress-bar-success")){
+                     prog.classList.remove("progress-bar-success");
                  }
                  prog.setAttribute("aria-valuenow", '75');
                  prog.setAttribute("style",'width:75%');
@@ -33,30 +50,32 @@
                  break;
 
              case "extracting words from website":
-                 prog.classList.add("danger");
-                 if (prog.classList.contains("info")){
-                     prog.classList.remove("info");
+                 document.getElementById("prog").innerHTML = "extracting words from website";
+                 prog.classList.add("progress-bar-danger");
+                 if (prog.classList.contains("progress-bar-info")){
+                     prog.classList.remove("progress-bar-info");
                  }
-                 if (prog.classList.contains("warning")){
-                     prog.classList.remove("warning");
+                 if (prog.classList.contains("progress-bar-warning")){
+                     prog.classList.remove("progress-bar-warning");
                  }
-                 if (prog.classList.contains("success")){
-                     prog.classList.remove("success");
+                 if (prog.classList.contains("progress-bar-success")){
+                     prog.classList.remove("progress-bar-success");
                  }
                  prog.setAttribute("aria-valuenow", '25');
                  prog.setAttribute("style",'width:25%');
                  break;
 
              case "calculating":
-                 prog.classList.add("warning");
-                 if (prog.classList.contains("info")){
-                     prog.classList.remove("info");
+                 document.getElementById("prog").innerHTML = "calculating";
+                 prog.classList.add("progress-bar-warning");
+                 if (prog.classList.contains("progress-bar-info")){
+                     prog.classList.remove("progress-bar-info");
                  }
-                 if (prog.classList.contains("danger")){
-                     prog.classList.remove("danger");
+                 if (prog.classList.contains("progress-bar-danger")){
+                     prog.classList.remove("progress-bar-danger");
                  }
-                 if (prog.classList.contains("success")){
-                     prog.classList.remove("success");
+                 if (prog.classList.contains("progress-bar-success")){
+                     prog.classList.remove("progress-bar-success");
                  }
                  prog.setAttribute("aria-valuenow", '50');
                  prog.setAttribute("style",'width:50%');
@@ -98,9 +117,9 @@
 
         <form method="post">
             <div class="form-input">
-                
+
                 <input class="text" name="url" id="url" onfocus="if (this.value=='URL') this.value = ''" onfocusout="if (this.value=='') this.value = 'URL'" value="URL" required>
-                
+
             </div>
 
             <input type="submit" value="Submit" class='submit-button'>
@@ -145,11 +164,11 @@
 
             <div class="explanation-text">
                 That are highly related to:
-                
+
             </div>
 
             <div class="{{ 'title veredict veredict-label ' + veredict }}"> {{ label }}</div>
-            
+
 
             <div class="explanation-text">
                 which is forbidden content
@@ -162,7 +181,7 @@
             <div class="explanation-text explanation-title">
                 The content of the entered website is classified as permitted
             </div>
-            
+
             {% endif %}
 
 
@@ -171,5 +190,5 @@
 
 
     </div>
-    
+
 </body>

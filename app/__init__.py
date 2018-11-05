@@ -19,6 +19,7 @@ class Config(object):
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+
 def create_app():
 
 
@@ -28,7 +29,7 @@ def create_app():
     db = SQLAlchemy()
 
     app.config['DEBUG'] = True
-    
+
     db.app = app
     db.init_app(app)
 
@@ -58,7 +59,8 @@ def create_app():
                 callback = in_json['callback']
                 _, _, _, key, _ = get_result(sites, True, callback=callback)
 
-                #TODO answer with status
+                return "calling classifier"
+
             else:
 
                 url = request.form['url']
@@ -67,7 +69,6 @@ def create_app():
                 if force_calc is None: force_calc = False
 
                 label, expl_words, veredict, key, ws_on = get_result([url], force_calc)
-                logger.info("called post, websocket: " + str(ws_on))
                 print("called post, websocket: " + str(ws_on))
         else:
             key = request.args.get('key')
@@ -98,24 +99,22 @@ def create_app():
         socket.send_string('send results')
         result = socket.recv()
         data = json.loads(result.decode('utf-8'))
-        logger.info(data)
+        print(data)
 
         prepared = dict()
         prepared['veredict'] = 'RESTRICTED' if data['restrict'] else 'PERMITTED'
-        prepared['expl_word'] = [word for word, _ in data[reasons][1].items()]
+        prepared['expl_word'] = [word for word, _ in data['reasons'][1].items()]
         prepared['key'] = 'done'
         prepared['label'] = data['label']
         prepared['url'] = data['url']
 
-        return redirect(url_for("index"), **prepared)
+        return redirect(url_for("index", **prepared))
 
     @sockets.route('/answer')
     def send_data(ws):
         print('Got a websocket connection, sending up data from zmq')
-        logger.info('Got a websocket connection, sending up data from zmq')
         socket = context.socket(zmq.REQ)
         socket.connect('tcp://localhost:{PORT}'.format(PORT=ZMQ_LISTENING_PORT))
-        
         gevent.sleep()
 
         while True:
@@ -123,9 +122,9 @@ def create_app():
             received = socket.recv()
             print("received to socket: ", received)
             data = json.loads(received.decode('utf-8'))
-            logger.info(data)
+
             ws.send(json.dumps(data))
-            if data['status'] == "formulating answer":
+            if data['status'] == "formulating answer" or data['status'] == 'error':
                 break
             gevent.sleep()
 

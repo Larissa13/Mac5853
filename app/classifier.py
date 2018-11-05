@@ -8,7 +8,6 @@ class Classifier:
 
     def __init__(self, model=None):
         self.parser = Parser()
-        print("imported parser")
         if model is None:
             #TODO download if inexistent
             self.model = KeyedVectors.load_word2vec_format('wiki.pt/wiki.pt.vec')
@@ -16,7 +15,6 @@ class Classifier:
         else:
             self.model = model
         self.status = "extracting words from website"
-        print("finished init")
 
 
     def calc_dists(self, word, kws):
@@ -45,17 +43,21 @@ class Classifier:
         answer['restrict'] = restrict
 
         reason = "highly correlated to " + max_res[0].name if restrict else permit_ans
-        answer['reasons'] = [reason, kw_result]
+        answer['reasons'] = [reason, kw_result[max_res[0].name].to_dict() if restrict else dict()]
         answer['label'] = max_res[0]
 
         return answer
 
 
-    def classify(self, url, kws, labels, dist_thresh=0.20, kws_thresh=0.5):
-        print("classifying")
+    def classify(self, url, kws, labels, dist_thresh=0.20, kws_thresh=0.49):
         kws = self.rm_unseen(kws)
         yield self.status
         words = self.parser.parse(url)
+
+        if len(words) == 0 or len(words) == 1 and words[0] == "":
+            yield "error"
+            return
+
         words = self.rm_unseen(words)
         for label in labels:
             label.keywords = self.rm_unseen(label.keywords)
@@ -74,7 +76,7 @@ class Classifier:
         key_results = dict()
         for label in labels:
             key_mean = df[label.keywords].mean(axis=0)
-            key_results[label] = key_mean
+            key_results[label.name] = list(key_mean)
             result[label] = (key_mean > dist_thresh).mean()
 
         self.status = "formulating answer"

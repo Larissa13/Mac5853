@@ -23,9 +23,6 @@ else:
 
 print("finished loading")
 
-def answer(callback, result):
-    requests.post(callback, json=result)
-
 
 def search_db(url):
     return Request.query.filter_by(url=url).first()
@@ -72,30 +69,43 @@ def call_cls(urls, callback, kws, labels):
     socket.bind('tcp://*:{PORT}'.format(PORT=ZMQ_LISTENING_PORT))
     poller = zmq.Poller()
     poller.register(socket, zmq.POLLIN)
-    print("calling cls")
+    print("calling classifier")
 
     msg = None
     while msg is None:
         socks = dict(poller.poll())
         if socket in socks:
-            print("msg")
             msg = socket.recv()
-            print(msg)
-        else:
-            print("AAAA")
+
     print("callback: ", callback)
     cls = Classifier(model=model)
     results = dict()
-    print("callback: ", callback)
     if callback is None:
         url = urls[0]
         for status in cls.classify(url, kws, labels):
             print(status)
             if type(status) == str:
                 socket.send_string(json.dumps({'status':status}))
+                if status == 'error':
+                    break
                 gevent.sleep(0.1)
                 msg = socket.recv()
             else:
                 socket.send_string(json.dumps(status))
     else:
-        pass #TODO
+        results = []
+        for url in urls:
+            for status in cls.classify(url, kws, labels):
+                if type(status) == str:
+                    data = json.dumps({'status':status + " in url " + url})
+                    request.post(callback, json=data)
+                    if status == 'error':
+                        results += [{'url':url,
+                                     'restrict':False,
+                                     'reasons':['error']}]
+                        break
+                else:
+                    results += [status]
+
+        data = json.dumps({'sites':results})
+        request.post(callback, json=data)
