@@ -13,7 +13,8 @@ class TestConfig(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     ENV = 'test'
     TESTING = True
-
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    
 
 @pytest.yield_fixture(scope='session')
 def app():
@@ -37,9 +38,15 @@ def app():
         ctx.pop()
 
 
-@pytest.fixture(scope='session')
-def testapp(app):
-    return app.test_client()
+@pytest.fixture(scope='module')
+def testapp():
+    flask_app, db = create_app(TestConfig)
+    test_client = flask_app.test_client()
+   
+    ctx = flask_app.app_context()
+    ctx.push()
+    yield test_client
+    ctx.pop()
 
 
 @pytest.yield_fixture(scope='session')

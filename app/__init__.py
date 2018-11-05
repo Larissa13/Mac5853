@@ -13,14 +13,14 @@ import json
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-class Config(object):
+class ConfigDev(object):
     # ...
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-def create_app():
+def create_app(Config):
 
 
     app = Flask(__name__)
@@ -148,7 +148,7 @@ def create_app():
     return app, db
 
 
-app, db = create_app()
+app, db = create_app(ConfigDev)
 logger = logging.getLogger(__name__)
 context = zmq.Context()
 ZMQ_LISTENING_PORT = 6557
