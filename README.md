@@ -44,17 +44,11 @@ Abra a pasta do sistema
 `pip install gevent`
 
 `pip install zmq`
-``
 
-# Create database
-`sudo -u postgres psql`
+`pip install requests`
+ 
+`pip install beautifulsoup4`
 
-`ALTER USER postgres PASSWORD 'password';` 
-
-`CREATE DATABASE forbidden;`
  # Create models and populate database
-`python manage.py db init`
-
-`python manage.py db migrate`
 
 `python populate.py`
