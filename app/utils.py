@@ -8,6 +8,7 @@ import json
 import gevent
 import pickle
 import os
+import sys
 
 ZMQ_LISTENING_PORT = 6557
 print("loading w2v")
@@ -48,7 +49,7 @@ def get_result(urls, force_calc, callback=None):
             return (*result_from_db(last_calc), 'done', 'False')
 
     Process(target=call_cls, args=(urls, callback, Keyword.query.all(), Label.query.all())).start()
-    return None, None, None, 'calculating', 'True'
+    return None, None, None, 'wait', 'True'
 
 
 def update_or_create_kws(words, req, db):
@@ -112,3 +113,4 @@ def call_cls(urls, callback, kws, labels):
         #TODO call update db
         data = json.dumps({'sites':results})
         request.post(callback, json=data)
+    sys.exit()
