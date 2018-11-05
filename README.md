@@ -62,35 +62,7 @@ Caso queira executar cada teste separadamente, faça `python [nome do arquivo de
 O sistema necessita de 8GB de RAM pelo menos e dos seguintes módulos Python:
 
 
-`pip install flask_sqlalchemy`
-
-`pip install Flask-Migrate`
-
-`pip install flask_script`
-
-`pip install psycopg2-binary`
-
-`pip install psycopg2`
-
-`pip install flask_sockets`
-
-`pip install gensim`
-
-`pip install pandas`
-
-`pip install spacy`
-
-`pip install gevent`
-
-`pip install zmq`
-
-`pip install requests`
- 
-`pip install beautifulsoup4`
-
-`pip install lxml`
+`pip install -r requirements.txt`
 
 `python -m spacy download pt`
-
-`pip install pytest`
 
