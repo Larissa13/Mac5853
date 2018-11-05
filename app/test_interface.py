@@ -9,7 +9,6 @@ def test_interface(testapp):
 	assert b'Forbidden Content Detector' in response.data
 	assert b'Force Recalculation' in response.data
 	assert b'Type an URL and press Submit.' in response.data
-	assert b'A Machine Learning model will analyse the website and classify it\'s content' in response.data
 
 
 
