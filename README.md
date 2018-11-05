@@ -34,11 +34,15 @@ Vá no browser e digite 127.0.0.1:5000 ou localhost:5000
 
 Então, é possível utiizar o sistema, via interface gráfica.
 
-# Como utilizar o sistema
+# Como utilizar o sistema via interface gráfica
+![Alt text](/Mac5853/imaages/template.png "Imagem da página inicial do sistema")
 
 No campo *URL* é possível incluir a url a ser testada.
 Para executar o classificador, basta apertar, então, o botão *submit*.
 Como os resultados da classificação das urls vistas são salvos no banco de dados, caso o usuário deseje que a classificação de uma dada url seja classificada novamente, basta que após incluir a url no campo *URL*, ele selecione também a checkbox *force calculation* e aperte *submit*.
+
+# Como utilizar o sistema por meio de requisição HTTP com método POST
+
 
 
 ## Dependências
@@ -71,3 +75,5 @@ Como os resultados da classificação das urls vistas são salvos no banco de da
 `pip install lxml`
 
 `python -m spacy download pt`
+
+`pip install`
