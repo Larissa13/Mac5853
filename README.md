@@ -12,13 +12,22 @@
 ## Como instalar o sistema
 
 Para instalar o sistema execute em um terminal
-`git clone git@github.com:Larissa13/Mac5853.git
+`git clone git@github.com:Larissa13/Mac5853.git`
 
 Ou vá no link [para download](https://github.com/Larissa13/Mac5853/archive/master.zip)
 
 
 ## Como executar o sistema 
 Abra a pasta do sistema 
+
+Execute o comando python execute.py
+Aguarde que apareça as mensagens 
+> loading w2v
+> finished loading
+
+Vá no browser e digite 127.0.0.1:5000
+
+Então, é possível utiizar o sistema, via interface gráfica.
 
 # Como utilizar o sistema
 
@@ -41,17 +50,18 @@ Abra a pasta do sistema
 
 `pip install spacy`
 
-``
+`pip install gevent`
 
-# Create database
-`sudo -u postgres psql`
+`pip install zmq`
 
-`ALTER USER postgres PASSWORD 'password';` 
+`pip install requests`
+ 
+`pip install beautifulsoup4`
 
-`CREATE DATABASE forbidden;`
+`pip install lxml`
+
+`python -m spacy download pt`
+
  # Create models and populate database
-`python manage.py db init`
-
-`python manage.py db migrate`
 
 `python populate.py`
