@@ -12,7 +12,7 @@
 ## Como instalar o sistema
 
 Para instalar o sistema execute em um terminal
-`git clone git@github.com:Larissa13/Mac5853.git
+`git clone git@github.com:Larissa13/Mac5853.git`
 
 Ou vá no link [para download](https://github.com/Larissa13/Mac5853/archive/master.zip)
 
@@ -41,6 +41,9 @@ Abra a pasta do sistema
 
 `pip install spacy`
 
+`pip install gevent`
+
+`pip install zmq`
 ``
 
 # Create database
