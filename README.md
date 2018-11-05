@@ -52,9 +52,11 @@ Como os resultados da classificação das urls vistas são salvos no banco de da
 
 
 # Como executar os testes de unidade e funcionais
-Na pasta do projeto, execute `pytest` 
-Depois, abra a pasta app com `cd app` e execute o comando `pytest`
-Caso queira executar cada teste separadamente, faça `python [nome do arquivo de teste].py`
+Na pasta do projeto, execute `pytest` .
+
+Depois, abra a pasta app com `cd app` e execute o comando `pytest` .
+
+Caso queira executar cada teste separadamente, faça `python [nome do arquivo de teste].py` .
 
 # Dependências
 `pip install flask_sqlalchemy`
