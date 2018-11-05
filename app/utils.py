@@ -1,7 +1,27 @@
 from app.models import Request, Keyword, Label
 from  multiprocessing import Process
 import requests
+import zmq.green as zmq
+from app.classifier import Classifier
+from gensim.models import KeyedVectors
+import json
+import gevent
+import pickle
+import os
 
+ZMQ_LISTENING_PORT = 6557
+print("loading w2v")
+pickle_path = 'model.pickle'
+
+if os.path.exists(pickle_path):
+    with open(pickle_path, 'rb') as file:
+        model = pickle.load(file)
+else:
+    model = KeyedVectors.load_word2vec_format('wiki.pt/wiki.pt.vec')
+    with open(pickle_path, 'wb') as file:
+        pickle.dump(model, file)
+
+print("finished loading")
 
 def answer(callback, result):
     requests.post(callback, json=result)
@@ -50,14 +70,27 @@ def call_cls(urls, callback, kws, labels):
     context = zmq.Context()
     socket = context.socket(zmq.REP)
     socket.bind('tcp://*:{PORT}'.format(PORT=ZMQ_LISTENING_PORT))
+    poller = zmq.Poller()
+    poller.register(socket, zmq.POLLIN)
+    print("calling cls")
 
-    msg = socket.recv()
-    cls = Classifier()
+    msg = None
+    while msg is None:
+        socks = dict(poller.poll())
+        if socket in socks:
+            print("msg")
+            msg = socket.recv()
+            print(msg)
+        else:
+            print("AAAA")
+    print("callback: ", callback)
+    cls = Classifier(model=model)
     results = dict()
-
+    print("callback: ", callback)
     if callback is None:
         url = urls[0]
         for status in cls.classify(url, kws, labels):
+            print(status)
             if type(status) == str:
                 socket.send_string(json.dumps({'status':status}))
                 gevent.sleep(0.1)
