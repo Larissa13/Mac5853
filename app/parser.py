@@ -1,8 +1,13 @@
+import nltk
+nltk.download('stopwords')
+nltk.download('rslp')
+nltk.download('punkt')
+
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 
 from nltk.corpus import stopwords
-from nltk.stem import RSLPStemmer 
+from nltk.stem import RSLPStemmer
 from nltk import tokenize
 import spacy
 import string, re
@@ -60,8 +65,9 @@ def lemmatization(text):
 class Parser:
     def extract(self, url):
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
-        req = Request(url=url, headers=headers)
+
         try:
+            req = Request(url=url, headers=headers)
             html = urlopen(req).read()
         except:
             return None
