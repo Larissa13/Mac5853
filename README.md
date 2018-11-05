@@ -88,3 +88,6 @@ Caso queira executar cada teste separadamente, faça `python [nome do arquivo de
 `pip install lxml`
 
 `python -m spacy download pt`
+
+`pip install pytest`
+
