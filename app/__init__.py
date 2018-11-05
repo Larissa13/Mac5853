@@ -57,9 +57,6 @@ def create_app(Config):
 
             if request.is_json:
                 in_json = json.loads(request.get_json())
-                print(type(in_json))
-                print(in_json)
-                #print(in_json.sites)
                 sites = in_json['sites']
                 callback = in_json['callback']
                 _, _, _, key, _ = get_result(sites, True, callback=callback)
