@@ -1,0 +1,13 @@
+flask_sqlalchemy
+Flask-Migrate
+flask_script
+flask_sockets
+gensim
+pandas
+spacy
+gevent
+zmq
+requests
+beautifulsoup4
+lxml
+pytest

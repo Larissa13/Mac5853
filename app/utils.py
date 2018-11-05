@@ -74,8 +74,9 @@ def call_cls(urls, callback, kws, labels):
     poller.register(socket, zmq.POLLIN)
     print("calling classifier")
 
+
     msg = None
-    while msg is None:
+    while msg is None and callback is None:
         socks = dict(poller.poll())
         if socket in socks:
             msg = socket.recv()
@@ -96,12 +97,14 @@ def call_cls(urls, callback, kws, labels):
             else:
                 socket.send_string(json.dumps(status))
     else:
+        print("calculating for direct post")
         results = []
         for url in urls:
             for status in cls.classify(url, kws, labels):
                 if type(status) == str:
                     data = json.dumps({'status':status + " in url " + url})
-                    request.post(callback, json=data)
+                    print("sending status to callback")
+                    requests.post(callback, json=data)
                     if status == 'error':
                         results += [{'url':url,
                                      'restrict':False,
@@ -112,5 +115,6 @@ def call_cls(urls, callback, kws, labels):
 
         #TODO call update db
         data = json.dumps({'sites':results})
-        request.post(callback, json=data)
+        print("sending results to callback")
+        requests.post(callback, json=data)
     sys.exit()
