@@ -88,7 +88,7 @@ def call_cls(urls, callback, kws, labels):
         for status in cls.classify(url, kws, labels):
             print("status:", status)
             if type(status) == str:
-                socket.send_string(json.dumps({'status':status}))
+                socket.send_string(json.dumps({'status':status, 'url':url}))
                 if status == 'error':
                     break
                 gevent.sleep(0.1)

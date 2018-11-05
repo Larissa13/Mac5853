@@ -48,7 +48,7 @@ def create_app(Config):
         expl_words = ['cigarro', 'tabaco', 'tragar']
         label = 'Cigarros'
         #TEMP VALUES
-
+        url = None
         key = 'wait'
         ws_on = 'False'
         status = status_dict[key]
@@ -98,7 +98,7 @@ def create_app(Config):
                 db.session.commit()
 
         return render_template('index.html', status=status, key=key,
-                               veredict=veredict, expl_words=expl_words, label=label, ws_on=ws_on)
+                               veredict=veredict, expl_words=expl_words, label=label, ws_on=ws_on, url=url)
 
 
     @app.route('/prepare')

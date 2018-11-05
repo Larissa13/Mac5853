@@ -20,7 +20,9 @@
              case "error":
                  button.disabled = false;
                  urlInput.disabled = false;
+                 urlInput.value = 'URL';
                  kwInput.disabled = false;
+
                  document.getElementById("prog").innerHTML = "ERROR";
                  prog.classList.add("progress-bar-danger");
                  if (prog.classList.contains("progress-bar-warning")){
@@ -40,6 +42,7 @@
              case "formulating answer":
                  button.disabled = true;
                  urlInput.disabled = true;
+                 urlInput.value = data['url'];
                  kwInput.disabled = true;
                  document.getElementById("prog").innerHTML = "formulating answer";
                  prog.classList.add("progress-bar-info");
@@ -60,6 +63,7 @@
              case "extracting words from website":
                  button.disabled = true;
                  urlInput.disabled = true;
+                 urlInput.value = data['url'];
                  kwInput.disabled = true;
                  document.getElementById("prog").innerHTML = "extracting words from website";
                  prog.classList.add("progress-bar-danger");
@@ -79,6 +83,7 @@
              case "calculating":
                  button.disabled = true;
                  urlInput.disabled = true;
+                 urlInput.value = data['url'];
                  kwInput.disabled = true;
                  document.getElementById("prog").innerHTML = "calculating";
                  prog.classList.add("progress-bar-warning");
@@ -132,7 +137,7 @@
         <form method="post">
             <div class="form-input">
 
-                <input class="text" name="url" id="url" onfocus="if (this.value=='URL') this.value = ''" onfocusout="if (this.value=='') this.value = 'URL'" value="URL" required>
+                <input class="text" name="url" id="url" onfocus="if (this.value=='URL') this.value = ''" onfocusout="if (this.value=='') this.value = 'URL'" value='{{ "URL" if url == None else url }}' required>
 
             </div>
 

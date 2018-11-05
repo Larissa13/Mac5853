@@ -118,6 +118,7 @@ label {
 .keywords{
     width: 450px;
     margin: 5% auto auto auto;
+    display: none;
 }
 
 .keywords label{
