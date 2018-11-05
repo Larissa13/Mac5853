@@ -20,13 +20,20 @@ class Classifier:
     def calc_dists(self, word, kws):
         dists = []
         for kw in kws:
-            dists += [self.model.similarity(word, kw)]
+            dists += [self.model.similarity(word, kw.word)]
 
         return np.array(dists)
 
 
+    def check_in_vocab(self, word):
+        if type(word) == str:
+            return word in self.model.wv.vocab
+        else:
+            return word.word in self.model.wv.vocab
+
+
     def rm_unseen(self, words):
-        return [word for word in words if word in self.model.wv.vocab]
+        return [word for word in words if self.check_in_vocab(word)]
 
 
     def prepare_result(self, result, url, thresh, kw_result):
@@ -43,14 +50,17 @@ class Classifier:
         answer['restrict'] = restrict
 
         reason = "highly correlated to " + max_res[0].name if restrict else permit_ans
-        answer['reasons'] = [reason, kw_result[max_res[0].name].to_dict() if restrict else dict()]
-        answer['label'] = max_res[0]
+        other_reason = kw_result[max_res[0].name].to_dict()
+        other_reason = {key.word:value for key, value in other_reason.items()}
+        answer['reasons'] = [reason, other_reason if restrict else dict()]
+        answer['label'] = max_res[0].name
 
         return answer
 
 
     def classify(self, url, kws, labels, dist_thresh=0.20, kws_thresh=0.49):
         kws = self.rm_unseen(kws)
+
         yield self.status
         words = self.parser.parse(url)
 
@@ -76,7 +86,7 @@ class Classifier:
         key_results = dict()
         for label in labels:
             key_mean = df[label.keywords].mean(axis=0)
-            key_results[label.name] = list(key_mean)
+            key_results[label.name] = key_mean
             result[label] = (key_mean > dist_thresh).mean()
 
         self.status = "formulating answer"

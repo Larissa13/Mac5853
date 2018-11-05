@@ -103,7 +103,8 @@ def create_app():
 
         prepared = dict()
         prepared['veredict'] = 'RESTRICTED' if data['restrict'] else 'PERMITTED'
-        prepared['expl_word'] = [word for word, _ in data['reasons'][1].items()]
+        prepared['expl_words'] = [word for word, _ in data['reasons'][1].items()]
+        
         prepared['key'] = 'done'
         prepared['label'] = data['label']
         prepared['url'] = data['url']
