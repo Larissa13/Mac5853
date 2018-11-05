@@ -16,6 +16,25 @@ Para instalar o sistema execute em um terminal
 
 Ou vá no link [para download](https://github.com/Larissa13/Mac5853/archive/master.zip)
 
+O sistema necessita de 8GB de RAM pelo menos:
+
+
+### Normal
+
+Instale as dependências executando os seguintes comandos:
+
+`pip install -r requirements.txt`
+
+`python -m spacy download pt`
+
+
+### Docker (NÃO COMPLETAMENTE TESTADO NO MOMENTO - dê preferência ao método anterior)
+
+Certifique-se de que possui o Docker instalado e execute os seguintes comandos:
+
+`docker build -t forbidden_cls:latest .`
+
+`docker run --name forbidden_cls -d -p 5000:5000`
 
 ## Como executar o sistema 
 Abra a pasta do sistema 
@@ -48,7 +67,40 @@ Como os resultados da classificação das urls vistas são salvos no banco de da
 
 
 # Como utilizar o sistema por meio de requisição HTTP com método POST
+Abra a pasta do sistema 
 
+Execute para popular a base de dados `python populate.py`
+
+Execute o comando `python execute.py`
+
+Aguarde que apareça as mensagens 
+
+> loading w2v
+
+> finished loading
+
+Execute o servidor que receberá os callbacks com o comando:
+
+`python callback_listener.py`
+
+Em outra aba do terminal, execute o seguinte:
+
+```
+python 
+
+>>> import requests
+>>> import json
+>>> url = "http://127.0.0.1:5000/"
+>>> callback_port = "5001"
+>>> callback = "http://127.0.0.1:" + callback_port
+
+>>> req_content = {'sites': ["http://www.exemplo1.com",
+                             "http://www.exemplo2.com",
+                             "http://www.exemplo3.com",
+                             "http://www.exemplo4.com"], "callback":callback}
+                             
+>>> requests.post(url, json=json.dumps(req_content))
+```
 
 
 # Como executar os testes de unidade e funcionais
@@ -57,12 +109,4 @@ Na pasta do projeto, execute `pytest` .
 Depois, abra a pasta app com `cd app` e execute o comando `pytest` .
 
 Caso queira executar cada teste separadamente, faça `python [nome do arquivo de teste].py` .
-
-# Dependências e Requerimento
-O sistema necessita de 8GB de RAM pelo menos e dos seguintes módulos Python:
-
-
-`pip install -r requirements.txt`
-
-`python -m spacy download pt`
 
