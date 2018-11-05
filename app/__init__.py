@@ -6,6 +6,18 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import logging
 import zmq.green as zmq
+import os
+import json
+
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+
+class Config(object):
+    # ...
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+        'sqlite:///' + os.path.join(basedir, 'app.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 def create_app():
 <<<<<<< HEAD
@@ -16,17 +28,11 @@ def create_app():
 
     app = Flask(__name__)
 
-    POSTGRES = {
-        'user': 'postgres',
-        'pw': 'password',
-        'db': 'forbidden',
-        'host': 'localhost',
-        'port': '5432',
-    }
-
+    app.config.from_object(Config)
     db = SQLAlchemy()
 
     app.config['DEBUG'] = True
+<<<<<<< HEAD
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
     %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 
@@ -46,6 +52,9 @@ def result_from_db(req):
     else:
         label, expl_words = None, None
 =======
+=======
+    
+>>>>>>> 0ff95e5376fa2eaba49ef73c96e6d7d32c886f71
     db.app = app
     db.init_app(app)
 
@@ -85,7 +94,8 @@ def result_from_db(req):
                 if force_calc is None: force_calc = False
 
                 label, expl_words, veredict, key, ws_on = get_result([url], force_calc)
-
+                logger.info("called post, websocket: " + str(ws_on))
+                print("called post, websocket: " + str(ws_on))
         else:
             key = request.args.get('key')
             veredict = request.args.get('veredict')
@@ -128,17 +138,20 @@ def result_from_db(req):
 
     @sockets.route('/answer')
     def send_data(ws):
+        print('Got a websocket connection, sending up data from zmq')
         logger.info('Got a websocket connection, sending up data from zmq')
         socket = context.socket(zmq.REQ)
         socket.connect('tcp://localhost:{PORT}'.format(PORT=ZMQ_LISTENING_PORT))
+        
         gevent.sleep()
 
         while True:
             socket.send_string("send status")
             received = socket.recv()
+            print("received to socket: ", received)
             data = json.loads(received.decode('utf-8'))
             logger.info(data)
-            ws.send(received)
+            ws.send(json.dumps(data))
             if data['status'] == "formulating answer":
                 break
             gevent.sleep()
@@ -148,5 +161,10 @@ def result_from_db(req):
 
 
 app, db = create_app()
+logger = logging.getLogger(__name__)
+context = zmq.Context()
+ZMQ_LISTENING_PORT = 6557
 
 from app.utils import *
+
+

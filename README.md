@@ -16,6 +16,14 @@
 
 `pip install flask_sockets`
 
+`pip install gensim`
+
+`pip install pandas`
+
+`pip install spacy`
+
+``
+
 # Create database
 `sudo -u postgres psql`
 

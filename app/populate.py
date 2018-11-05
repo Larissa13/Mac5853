@@ -1,5 +1,8 @@
 from app import app, db
+from app.models import Request, Keyword, Label
+default_req = [Request(id = 0, url = ' ', status = 'done')] 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 '''example_req = [Request(id=0, url='www.fumorio.com', status='aguardando')]
 example_kw = [Keyword(word='narguile', vector=[0.2, 0.1, 0.0], requests=[example_req[0]])]
@@ -11,6 +14,8 @@ example_label = [Label(name='cigarro', restrict=True, keywords=[example_kw[0]]),
 '''
 default_req = [Request(id = 0, url = ' ', status = 'done')] 
 
+=======
+>>>>>>> 0ff95e5376fa2eaba49ef73c96e6d7d32c886f71
 default_kw_armas = [Keyword(word='arma', requests=[default_req[0]]), Keyword(word='munição', requests=[default_req[0]]), Keyword(word='calibre', requests=[default_req[0]]),
 					 Keyword(word='revólver', requests=[default_req[0]]), Keyword(word='cano', requests=[default_req[0]]), Keyword(word='carabina', requests=[default_req[0]]), 
 					 Keyword(word='espingarda', requests=[default_req[0]])]
@@ -33,7 +38,11 @@ default_kw_serv = [Keyword(word='operadora', requests=[default_req[0]]), Keyword
 
 labels = [Label(name='Armas de fogo', restrict=True, keywords=default_kw_armas), Label(name = 'Cigarros', restrict=True, keywords=default_kw_cigarros),
 		Label(name='Prostutuição', restrict=True, keywords=default_kw_prost), Label(name='Remédios', restrict=True, keywords=default_kw_remedio),
+<<<<<<< HEAD
 		Label(name='Serviços ilegais', restrict=True, keywords=default_kw_serv), Label(name='Site permitido', restrict=False, keywords=[])]					 
+=======
+		Label(name='Serviços ilegais', restrict=True, keywords=default_kw_serv), Label(name='Site permitido', restrict=False, keywords=[])]
+>>>>>>> 0ff95e5376fa2eaba49ef73c96e6d7d32c886f71
 
 with app.app_context():
     db.create_all()
@@ -41,6 +50,10 @@ with app.app_context():
 '''for example in example_label:
     db.session.add(example)'''
 for label in labels:
+<<<<<<< HEAD
 	de.session.add(label)
+=======
+	db.session.add(label)
+>>>>>>> 0ff95e5376fa2eaba49ef73c96e6d7d32c886f71
 db.session.commit()
 

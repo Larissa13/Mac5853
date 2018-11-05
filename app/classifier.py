@@ -1,5 +1,5 @@
 from gensim.models import KeyedVectors
-from parser import Parser
+from app.parser import Parser
 import numpy as np
 import pandas as pd
 
@@ -8,11 +8,15 @@ class Classifier:
 
     def __init__(self, model=None):
         self.parser = Parser()
+        print("imported parser")
         if model is None:
+            #TODO download if inexistent
             self.model = KeyedVectors.load_word2vec_format('wiki.pt/wiki.pt.vec')
+
         else:
             self.model = model
         self.status = "extracting words from website"
+        print("finished init")
 
 
     def calc_dists(self, word, kws):
@@ -48,7 +52,7 @@ class Classifier:
 
 
     def classify(self, url, kws, labels, dist_thresh=0.20, kws_thresh=0.5):
-
+        print("classifying")
         kws = self.rm_unseen(kws)
         yield self.status
         words = self.parser.parse(url)
@@ -76,4 +80,4 @@ class Classifier:
         self.status = "formulating answer"
         yield self.status
 
-        yield self.prepare_result(result, url, kws_thresh, kw_result)
+        yield self.prepare_result(result, url, kws_thresh, key_results)

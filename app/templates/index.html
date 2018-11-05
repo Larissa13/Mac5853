@@ -1,69 +1,71 @@
 <!doctype html>
 
 <head>
-    <div id="ws_on" class="{{ ws_on  }}"></div>
-    <script type="text/javascript">
-
-     if (document.getElementById('ws_on').classList.contains('True')) {
-         var ws = new WebSocket("ws://localhost:5000/answer");
-         
-         ws.onmessage = function(evt) {
-             var data = JSON.parse(evt.data);
-             var prog = document.getElementById("prog");
-             switch (data["status"]){
-                 case "formulating answer":
-                     
-                     prog.classList.add("formulating answer");
-                     if (prog.classList.contains("calculating")){
-                         prog.classList.remove("calculating");
-                     }
-                     if (prog.classList.contains("extracting words from website")){
-                         prog.classList.remove("extracting words from website");
-                     }
-                     if (prog.classList.contains("done")){
-                         prog.classList.remove("done");
-                     }
-                     prog.setAttribute("aria-valuenow", '75');
-                     prog.setAttribute("style",'width:75%');
-                     window.location.replace(window.location.href + "/prepare");
-                     break;
-
-                 case "extracting words from website":
-                     prog.classList.add("extracting words from website");
-                     if (prog.classList.contains("formulating answer")){
-                         prog.classList.remove("formulating answer");
-                     }
-                     if (prog.classList.contains("calculating")){
-                         prog.classList.remove("calculating");
-                     }
-                     if (prog.classList.contains("done")){
-                         prog.classList.remove("done");
-                     }
-                     prog.setAttribute("aria-valuenow", '25');
-                     prog.setAttribute("style",'width:25%');
-                     break;
-
-                 case "calculating":
-                     prog.classList.add("calculating");
-                     if (prog.classList.contains("formulating answer")){
-                         prog.classList.remove("formulating answer");
-                     }
-                     if (prog.classList.contains("extracting words from website")){
-                         prog.classList.remove("extracting words from website");
-                     }
-                     if (prog.classList.contains("done")){
-                         prog.classList.remove("done");
-                     }
-                     prog.setAttribute("aria-valuenow", '50');
-                     prog.setAttribute("style",'width:50%');
-                     break;
-             }
-         };
-
-     }
-    </script>
+    
 </head>
+<div id="ws_on" class="{{ ws_on  }}"></div>
+<script type="text/javascript">
 
+ if (document.getElementById('ws_on').classList.contains('True')) {
+     var ws = new WebSocket("ws://localhost:5000/answer");
+     
+     ws.onmessage = function(evt) {
+         
+         var data = JSON.parse(evt.data);
+         var prog = document.getElementById("prog");
+         
+         switch (data["status"]){
+             case "formulating answer":
+                 
+                 prog.classList.add("info");
+                 if (prog.classList.contains("warning")){
+                     prog.classList.remove("warning");
+                 }
+                 if (prog.classList.contains("danger")){
+                     prog.classList.remove("danger");
+                 }
+                 if (prog.classList.contains("success")){
+                     prog.classList.remove("success");
+                 }
+                 prog.setAttribute("aria-valuenow", '75');
+                 prog.setAttribute("style",'width:75%');
+                 window.location.replace(window.location.href + "/prepare");
+                 break;
+
+             case "extracting words from website":
+                 prog.classList.add("danger");
+                 if (prog.classList.contains("info")){
+                     prog.classList.remove("info");
+                 }
+                 if (prog.classList.contains("warning")){
+                     prog.classList.remove("warning");
+                 }
+                 if (prog.classList.contains("success")){
+                     prog.classList.remove("success");
+                 }
+                 prog.setAttribute("aria-valuenow", '25');
+                 prog.setAttribute("style",'width:25%');
+                 break;
+
+             case "calculating":
+                 prog.classList.add("warning");
+                 if (prog.classList.contains("info")){
+                     prog.classList.remove("info");
+                 }
+                 if (prog.classList.contains("danger")){
+                     prog.classList.remove("danger");
+                 }
+                 if (prog.classList.contains("success")){
+                     prog.classList.remove("success");
+                 }
+                 prog.setAttribute("aria-valuenow", '50');
+                 prog.setAttribute("style",'width:50%');
+                 break;
+         }
+     };
+
+ }
+</script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -157,10 +159,10 @@
 
 
             {% else %}
-                <div class="explanation-text explanation-title">
-                    The content of the entered website is classified as permitted
-                </div>
-           
+            <div class="explanation-text explanation-title">
+                The content of the entered website is classified as permitted
+            </div>
+            
             {% endif %}
 
 
@@ -169,4 +171,5 @@
 
 
     </div>
+    
 </body>
