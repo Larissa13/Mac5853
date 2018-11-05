@@ -60,6 +60,8 @@ Então, é possível utiizar o sistema, via interface gráfica.
 
 `pip install lxml`
 
+`python -m spacy download pt`
+
  # Create models and populate database
 
 `python populate.py`
