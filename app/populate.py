@@ -1,7 +1,12 @@
 from app import app, db
 
+<<<<<<< HEAD
 '''example_req = [Request(id=0, url='www.fumorio.com', status='aguardando')]
 example_kw = [Keyword(word='narguile', vector=[0.2, 0.1, 0.0], requests=[example_req[0]])]
+=======
+example_req = [Request(id=0, url='www.fumorio.com', status='aguardando')]
+example_kw = [Keyword(word='narguile', requests=[example_req[0]])]
+>>>>>>> 8198fc541f58cfdd3d343f3075a85ab231080aab
 example_label = [Label(name='cigarro', restrict=True, keywords=[example_kw[0]]), Label(name='permitted', restrict=False, keywords=[])]
 '''
 default_req = [Request(id = 0, url = ' ', status = 'done')] 
