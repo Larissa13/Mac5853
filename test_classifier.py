@@ -3,7 +3,16 @@ from classifier import *
 import numpy as np
 
 class TestClassifier(ut.TestCase):
-	classifier =  Classifier()
+	pickle_path = 'model.pickle'
+
+	if os.path.exists(pickle_path):
+    	with open(pickle_path, 'rb') as file:
+        	model = pickle.load(file)
+	else:
+    	model = KeyedVectors.load_word2vec_format('wiki.pt/wiki.pt.vec')
+    	with open(pickle_path, 'wb') as file:
+        	pickle.dump(model, file)
+	classifier =  Classifier(model = model)
 	word = ['hahsbaja', 'casa', 'arma']
 
 	def test_rm_unseen(self):

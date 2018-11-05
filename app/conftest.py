@@ -25,6 +25,7 @@ def app():
     _app.config['ENV'] = 'test'
     with Postgresql() as postgresql:
         _app.config['SQLALCHEMY_DATABASE_URI'] = postgresql.url()
+        _app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         ctx = _app.app_context()
         ctx.push()
 
