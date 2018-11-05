@@ -58,7 +58,10 @@ Depois, abra a pasta app com `cd app` e execute o comando `pytest` .
 
 Caso queira executar cada teste separadamente, faça `python [nome do arquivo de teste].py` .
 
-# Dependências
+# Dependências e Requerimento
+O sistema necessita de 8GB de RAM pelo menos e dos seguintes módulos Python:
+
+
 `pip install flask_sqlalchemy`
 
 `pip install Flask-Migrate`
