@@ -46,7 +46,7 @@
                  }
                  prog.setAttribute("aria-valuenow", '75');
                  prog.setAttribute("style",'width:75%');
-                 window.location.replace(window.location.href + "/prepare");
+                 window.location.replace(window.location.href.split('?')[0] + "/prepare");
                  break;
 
              case "extracting words from website":
@@ -130,8 +130,8 @@
 
             <div class="checkbox-wrap">
 
-                <label for="forcecalc">Force Recalculation
-                    <input type="checkbox" name="forcecalc" id="forcecalc" value="{{ request.form['forcecalc'] }}" />
+                <label>Force Recalculation
+                    <input type="checkbox" name="forcecalc" id="forcecalc" />
                     <span class="checkmark"></span>
                 </label>
             </div>
@@ -150,7 +150,7 @@
 
             {% if veredict == 'RESTRICTED' %}
             <div class="explanation-text">
-                The entered website contains, among others, the following words:
+                The entered website contains words highly related to the following words:
             </div>
             <div class="{{ 'explanation-words ' + veredict }}">
                 <ul>

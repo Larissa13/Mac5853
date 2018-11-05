@@ -34,6 +34,8 @@ def create_app():
     db.init_app(app)
 
     sockets = Sockets(app)
+
+
     @app.route('/', methods=('GET', 'POST'))
     def index():
         status_dict = {'done':('success', '100'), 'calculating':('warning', '50'),
@@ -65,26 +67,33 @@ def create_app():
 
                 url = request.form['url']
                 keywords = request.form['keywords']
-                force_calc = request.form.get('forcecalc')
-                if force_calc is None: force_calc = False
+                force_calc = request.form.get('forcecalc') != None
 
                 label, expl_words, veredict, key, ws_on = get_result([url], force_calc)
+                status = status_dict[key]
                 print("called post, websocket: " + str(ws_on))
+                print(label, expl_words, veredict, key, force_calc)
         else:
             key = request.args.get('key')
             veredict = request.args.get('veredict')
-            expl_words = request.args.get('expl_words')
+
+            n_words = request.args.get('n_words')
+            n_words = n_words if n_words is not None else 0
+            expl_words = []
+            for i in range(int(n_words)):
+                expl_words += [request.args.get('expl_words_' + str(i))]
+
             label = request.args.get('label')
             url = request.args.get('url')
-
+            print('words', expl_words)
             status = status_dict[key] if key is not None else status_dict['wait']
 
             if key is not None:
-                req = Request(url=url, status=status)
+                req = Request(url=url, status=key)
                 db.session.add(req)
-
+                db.session.commit()
                 if key == 'done':
-                    update_or_create_kws(expl_words, req)
+                    update_or_create_kws(expl_words, req, db)
 
                 db.session.commit()
 
@@ -103,12 +112,18 @@ def create_app():
 
         prepared = dict()
         prepared['veredict'] = 'RESTRICTED' if data['restrict'] else 'PERMITTED'
-        prepared['expl_words'] = [word for word, _ in data['reasons'][1].items()]
-        
+
+        for i, (word, _) in enumerate(data['reasons'][1].items()):
+            prepared['expl_words_' + str(i)] = word
+
+        #prepared['expl_words'] = [word for word, _ in data['reasons'][1].items()]
+        n_words = len(data['reasons'][1])
         prepared['key'] = 'done'
         prepared['label'] = data['label']
         prepared['url'] = data['url']
-
+        prepared['n_words'] = n_words
+        print("number of keywords: ", n_words)
+        print([prepared['expl_words_' + str(i)] for i in range(n_words)])
         return redirect(url_for("index", **prepared))
 
     @sockets.route('/answer')

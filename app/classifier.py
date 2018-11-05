@@ -50,10 +50,10 @@ class Classifier:
         answer['restrict'] = restrict
 
         reason = "highly correlated to " + max_res[0].name if restrict else permit_ans
-        other_reason = kw_result[max_res[0].name].to_dict()
+        other_reason = kw_result[max_res[0].name].to_dict() if restrict else dict()
         other_reason = {key.word:value for key, value in other_reason.items()}
         answer['reasons'] = [reason, other_reason if restrict else dict()]
-        answer['label'] = max_res[0].name
+        answer['label'] = max_res[0].name if restrict else 'permitted'
 
         return answer
 

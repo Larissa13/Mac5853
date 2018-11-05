@@ -105,6 +105,8 @@ class Parser:
         links = []
         for i, link in enumerate(possible_links):
             link_url = link.get('href')
+            if not link_url:
+                continue
             if link_url[0] == '/':
                 links += [url[:-1] + link_url]
             elif 'https' in link_url:

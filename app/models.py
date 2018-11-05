@@ -30,4 +30,4 @@ class Label(db.Model):
     __tablename__ = 'label'
     name = db.Column(db.String(50), primary_key=True)
     restrict = db.Column(db.Boolean, nullable=False)
-    keywords = db.relationship(Keyword, backref='label', lazy=True)
+    keywords = db.relationship(Keyword, backref='label')

@@ -30,7 +30,7 @@ def search_db(url):
 
 def result_from_db(req):
     if req.keywords:
-        label = req.keywords[0].name
+        label = req.keywords[0].label.name
         expl_words = [kw.word for kw in req.keywords]
         veredict = 'RESTRICTED'
     else:
@@ -45,13 +45,15 @@ def get_result(urls, force_calc, callback=None):
     if not force_calc:
         last_calc = search_db(urls[0])
         if last_calc is not None:
-            return result_from_db(last_calc), 'done', 'False'
+            return (*result_from_db(last_calc), 'done', 'False')
 
     Process(target=call_cls, args=(urls, callback, Keyword.query.all(), Label.query.all())).start()
     return None, None, None, 'calculating', 'True'
 
 
-def update_or_create_kws(words, req):
+def update_or_create_kws(words, req, db):
+    print("updating keywords: ", words)
+    if words is None: return
     for word in words:
         kw = Keyword.query.filter_by(word=word).first()
         if kw is None:
@@ -83,7 +85,7 @@ def call_cls(urls, callback, kws, labels):
     if callback is None:
         url = urls[0]
         for status in cls.classify(url, kws, labels):
-            print(status)
+            print("status:", status)
             if type(status) == str:
                 socket.send_string(json.dumps({'status':status}))
                 if status == 'error':
@@ -107,5 +109,6 @@ def call_cls(urls, callback, kws, labels):
                 else:
                     results += [status]
 
+        #TODO call update db
         data = json.dumps({'sites':results})
         request.post(callback, json=data)
