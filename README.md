@@ -27,6 +27,10 @@ Instale as dependências executando os seguintes comandos:
 
 `python -m spacy download pt`
 
+Baixe o [modelo word2vec](https://s3-us-west-1.amazonaws.com/fasttext-vectors/wiki.pt.vec) pré-treinado.
+
+Crie uma pasta chamada wiki.pt e coloque dentro o arquivo baixado.
+
 
 ### Docker (NÃO COMPLETAMENTE TESTADO NO MOMENTO - dê preferência ao método anterior)
 
