@@ -9,6 +9,8 @@ COPY requirements.txt requirements.txt
 COPY execute.py execute.py
 COPY populate.py populate.py
 COPY app app
+COPY wiki.pt wiki.pt
+
 
 RUN pip install -r ./requirements.txt
 RUN python -m spacy download pt
