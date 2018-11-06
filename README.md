@@ -32,28 +32,31 @@ Instale as dependências executando os seguintes comandos:
 `python -m spacy download pt`
 
 
-### Docker (NÃO COMPLETAMENTE TESTADO NO MOMENTO - dê preferência ao método anterior)
+### Docker (Demora cerca de 30 minutos)
 
 Certifique-se de que possui o Docker instalado e execute os seguintes comandos:
 
 `docker build -t forbidden_cls:latest .`
 
-`docker run --name forbidden_cls -d -p 5000:5000`
+`docker run --name forbidden_cls -d -p 5000:5000 forbidden_cls:latest`
 
 ## Como executar o sistema 
-Abra a pasta do sistema 
 
-Execute para popular a base de dados `python populate.py`
+Se o sistema foi instalado com o Docker, pule para o passo 5
 
-Execute o comando `python execute.py`
+1.Abra a pasta do sistema 
 
-Aguarde que apareça as mensagens 
+2.Execute para popular a base de dados `python populate.py`
+
+3.Execute o comando `python execute.py`
+
+4.Aguarde que apareça as mensagens 
 
 > loading w2v
 
 > finished loading
 
-Vá no browser e digite 127.0.0.1:5000 ou localhost:5000
+5.Vá no browser e digite 127.0.0.1:5000 ou localhost:5000
 
 Então, é possível utiizar o sistema, via interface gráfica.
 
