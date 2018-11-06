@@ -1,10 +1,13 @@
 from app import app, db
 from app.models import Request, Keyword, Label
 
-db.session.query(Request).delete()
-db.session.query(Keyword).delete()
-db.session.query(Label).delete()
-db.session.commit()
+try:
+    db.session.query(Request).delete()
+    db.session.query(Keyword).delete()
+    db.session.query(Label).delete()
+    db.session.commit()
+except:
+    print("tried to clean tables, but they don't yet exist")
 
 default_req = [Request(id = 0, url = ' ', status = 'done')] 
 
