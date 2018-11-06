@@ -1,6 +1,10 @@
 from app import app, db
 from app.models import Request, Keyword, Label
-default_req = [Request(id = 0, url = ' ', status = 'done')] 
+
+db.session.query(Request).delete()
+db.session.query(Keyword).delete()
+db.session.query(Label).delete()
+db.session.commit()
 
 default_req = [Request(id = 0, url = ' ', status = 'done')] 
 
@@ -25,7 +29,7 @@ default_kw_serv = [Keyword(word='operadora', requests=[default_req[0]]), Keyword
 				   Keyword(word='net', requests=[default_req[0]]), Keyword(word='vivo', requests=[default_req[0]])]
 
 labels = [Label(name='Armas de fogo', restrict=True, keywords=default_kw_armas), Label(name = 'Cigarros', restrict=True, keywords=default_kw_cigarros),
-		Label(name='Prostutuição', restrict=True, keywords=default_kw_prost), Label(name='Remédios', restrict=True, keywords=default_kw_remedio),
+		Label(name='Prostituição', restrict=True, keywords=default_kw_prost), Label(name='Remédios', restrict=True, keywords=default_kw_remedio),
 
 		Label(name='Serviços ilegais', restrict=True, keywords=default_kw_serv), Label(name='Site permitido', restrict=False, keywords=[])]
 
