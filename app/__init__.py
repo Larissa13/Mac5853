@@ -14,7 +14,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class ConfigDev(object):
-    # ...
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -48,6 +47,7 @@ def create_app(Config):
         expl_words = ['cigarro', 'tabaco', 'tragar']
         label = 'Cigarros'
         #TEMP VALUES
+
         url = None
         key = 'wait'
         ws_on = 'False'
@@ -85,7 +85,6 @@ def create_app(Config):
 
             label = request.args.get('label')
             url = request.args.get('url')
-            print('words', expl_words)
             status = status_dict[key] if key is not None else status_dict['wait']
 
             if key is not None:
@@ -108,7 +107,7 @@ def create_app(Config):
         socket.send_string('send results')
         result = socket.recv()
         data = json.loads(result.decode('utf-8'))
-        print(data)
+        print("data received from classifier: ", data)
 
         prepared = dict()
         prepared['veredict'] = 'RESTRICTED' if data['restrict'] else 'PERMITTED'
@@ -116,15 +115,17 @@ def create_app(Config):
         for i, (word, _) in enumerate(data['reasons'][1].items()):
             prepared['expl_words_' + str(i)] = word
 
-        #prepared['expl_words'] = [word for word, _ in data['reasons'][1].items()]
         n_words = len(data['reasons'][1])
         prepared['key'] = 'done'
         prepared['label'] = data['label']
         prepared['url'] = data['url']
         prepared['n_words'] = n_words
+
         print("number of keywords: ", n_words)
         print([prepared['expl_words_' + str(i)] for i in range(n_words)])
+
         return redirect(url_for("index", **prepared))
+
 
     @sockets.route('/answer')
     def send_data(ws):
@@ -137,6 +138,7 @@ def create_app(Config):
             socket.send_string("send status")
             received = socket.recv()
             print("received to socket: ", received)
+
             data = json.loads(received.decode('utf-8'))
 
             ws.send(json.dumps(data))
@@ -154,4 +156,3 @@ context = zmq.Context()
 ZMQ_LISTENING_PORT = 6557
 
 from app.utils import *
-

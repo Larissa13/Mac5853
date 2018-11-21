@@ -117,3 +117,6 @@ Depois, abra a pasta app com `cd app` e execute o comando `pytest` .
 
 Caso queira executar cada teste separadamente, faça `python [nome do arquivo de teste].py` .
 
+
+
+

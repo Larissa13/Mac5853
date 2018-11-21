@@ -12,6 +12,7 @@ from nltk import tokenize
 import spacy
 import string, re
 
+
 def tokenize_text(sentences):
     words = [tokenize.word_tokenize(sent, language='portuguese') for sent in sentences]
     words = sum(words, [])

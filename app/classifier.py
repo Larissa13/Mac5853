@@ -14,6 +14,7 @@ class Classifier:
 
         else:
             self.model = model
+
         self.status = "extracting words from website"
 
 
@@ -74,6 +75,7 @@ class Classifier:
 
         self.status = "calculating"
         yield self.status
+        
         dists = []
         for word in words:
             dists += [self.calc_dists(word, kws)]
