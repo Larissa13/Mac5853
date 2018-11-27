@@ -1,0 +1,44 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Unknown </title></head><body>
+<p>[nltk_data] Downloading package stopwords to
+[nltk_data]     /home/larissa/nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+[nltk_data] Downloading package rslp to /home/larissa/nltk_data...
+[nltk_data]   Package rslp is already up-to-date!
+[nltk_data] Downloading package punkt to /home/larissa/nltk_data...
+[nltk_data]   Package punkt is already up-to-date!
+loading w2v
+finished loading
+loading w2v
+finished loading</p>
+<h1 id="utils">utils</h1>
+<h2 id="search_db">search_db</h2>
+<p><code>python
+search_db(url)</code></p>
+<p>Searches the Request table for the entry that correponds to a given url and returns it.</p>
+<p><strong>Input:</strong></p>
+<pre><code>- url (str): an url string.
+</code></pre>
+<p><strong>Output:</strong></p>
+<pre><code>- the Request table entry corresponding to this url.
+</code></pre>
+<h2 id="result_from_db">result_from_db</h2>
+<p><code>python
+result_from_db(req)</code></p>
+<p>Returns the Keywords and the Label associated with a request if it was previously classified as Restricted.
+Otherwise, returns that the request was classified as Permitted, with no Keywords and Label associated.</p>
+<p><strong>Input:</strong></p>
+<pre><code>req (Request): a Request entry from Request database.
+</code></pre>
+<h2 id="get_result">get_result</h2>
+<p><code>python
+get_result(urls, force_calc, callback=None)</code></p>
+<h2 id="update_or_create_kws">update_or_create_kws</h2>
+<p><code>python
+update_or_create_kws(words, req, db)</code></p>
+<p>Creates or updates the keywords in the Keyword table.</p>
+<p><strong>Input:</strong></p>
+<pre><code>- words (list): a list of strings to be inserted or modified in the Keyword table.
+- req (Request): a Request to be associated with the words.
+- db (database): The app`s database.
+</code></pre>
+</body></html>
