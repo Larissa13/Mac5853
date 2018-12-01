@@ -9,6 +9,10 @@
 * Serviços ilegais
 * Urls permitidas (isto é sem conteúdo ilegal)
 
+## Vídeo Tutorial:
+[Video](https://youtu.be/VBbEqRvOvDI)
+
+
 ## Como instalar o sistema
 
 Para instalar o sistema execute em um terminal
