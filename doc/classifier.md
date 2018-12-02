@@ -1,12 +1,3 @@
-[nltk_data] Downloading package stopwords to
-[nltk_data]     /home/larissa/nltk_data...
-[nltk_data]   Package stopwords is already up-to-date!
-[nltk_data] Downloading package rslp to /home/larissa/nltk_data...
-[nltk_data]   Package rslp is already up-to-date!
-[nltk_data] Downloading package punkt to /home/larissa/nltk_data...
-[nltk_data]   Package punkt is already up-to-date!
-loading w2v
-finished loading
 # classifier
 
 ## Classifier
@@ -33,12 +24,12 @@ Calculates the distance between a word and a list of words based on the similari
 
 __Input:__
 
-    -word (str): The word that will be compared (based on similarity) to a list of keywords.
-    -kws (list): List of Keywords.
+    - word (str): The word that will be compared (based on similarity) to a list of keywords.
+    - kws (list): List of Keywords.
 
 __Output:__
 
-    -dists (list): a list of distances (float) calculated between the word and each keyword in kws.
+    - dists (list): a list of distances (float) calculated between the word and each keyword in kws.
 
 ### check_in_vocab
 ```python
@@ -49,10 +40,10 @@ Checks whether a word is in the vocabulary of the model or not.
 
 __Input:__
 
-    -word (str): the word to be verified.
+    - word (str): the word to be verified.
 
 #Output:
-    -boolean valeu indicating if the word is part of the model's vocabulary.
+    - boolean valeu indicating if the word is part of the model's vocabulary.
 
 ### rm_unseen
 ```python
@@ -78,29 +69,29 @@ Prepares the answer structure to be displayed in the website for the user.
 
 __Input:__
 
-    -result (dict):
-    -url (str):
-    -thresh (float):
-    -kw_result (dict):
+    - result (dict): maps from label to veredict.
+    - url (str): an url string.
+    - thresh (float): minimum similarity for a keyword to be considered present in the content.
+    - kw_result (dict): maps from label name to a pandas` series which maps from keywords to similarity
 
 #Output:
-    -answer (dict):
+    - answer (dict): contains url, the classification, the reasons (keywords and label).
 
 ### classify
 ```python
 Classifier.classify(self, url, kws, labels, dist_thresh=0.2, kws_thresh=0.49)
 ```
 
-Classifies a url based on the word2vec  similarity of words extracted from its html content. The result is the output of the prepare_result function.
+Classifies an url based on the word2vec  similarity of words extracted from its html content. The result is the output of the prepare_result function.
 
 __Input:__
 
-    -url (str): a url string.
-    -kws (list): a list of Keywords from Keyword database.
-    -labels (list): a list od Labels from Label database.
+    - url (str): an url string.
+    - kws (list): a list of Keywords from Keyword database.
+    - labels (list): a list od Labels from Label database.
 
 *Optional:*
-    -dist_thresh (float, 0.20):
-    -kws_thresh (float, 0.49):
+    - dist_thresh (float, 0.20): minimum similarity for a label to be considered present in the content.
+    - kws_thresh (float, 0.49): minimum similarity for a keyword to be considered present in the content.
 
 

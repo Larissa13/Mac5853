@@ -1,6 +1,10 @@
 from app import app, db
 from app.models import Request, Keyword, Label
 
+"""
+Populates the system's database tables with pre-defined Keywords and Labels to be used in the classifer.
+"""
+
 try:
     db.session.query(Request).delete()
     db.session.query(Keyword).delete()

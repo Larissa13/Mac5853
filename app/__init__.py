@@ -1,3 +1,6 @@
+import sys
+sys.path.append('../')
+
 import json
 import gevent
 from flask_sockets import Sockets
@@ -14,6 +17,9 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class ConfigDev(object):
+    """
+    Sets app's development configuration.
+    """
     # ...
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
@@ -21,8 +27,9 @@ class ConfigDev(object):
 
 
 def create_app(Config):
-
-
+    """
+    Creates the website's pages behavior and the app's database. Returns app object and database object.
+    """
     app = Flask(__name__)
 
     app.config.from_object(Config)
@@ -38,6 +45,9 @@ def create_app(Config):
 
     @app.route('/', methods=('GET', 'POST'))
     def index():
+        """
+        Creates and desplays the main page (index). Returns the rendered webpage.
+        """
         status_dict = {'done':('success', '100'), 'calculating':('warning', '50'),
                        'extracting words from website':('danger', '25'),
                        'formulating answer':('info', '75'), 'wait':('', '0')}
@@ -103,6 +113,9 @@ def create_app(Config):
 
     @app.route('/prepare')
     def prepare():
+        """
+        Creates an intermediate page that prepares the classification answer to be presented. Returns an redirection to the main page.
+        """
         socket = context.socket(zmq.REQ)
         socket.connect('tcp://localhost:{PORT}'.format(PORT=ZMQ_LISTENING_PORT))
         socket.send_string('send results')
@@ -128,6 +141,9 @@ def create_app(Config):
 
     @sockets.route('/answer')
     def send_data(ws):
+        """
+        Establishes a socjet connection with the server to receive status from classification and redirects to prepare page when the result is received.
+        """
         print('Got a websocket connection, sending up data from zmq')
         socket = context.socket(zmq.REQ)
         socket.connect('tcp://localhost:{PORT}'.format(PORT=ZMQ_LISTENING_PORT))
