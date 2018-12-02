@@ -1,10 +1,3 @@
-[nltk_data] Downloading package stopwords to
-[nltk_data]     /home/larissa/nltk_data...
-[nltk_data]   Package stopwords is already up-to-date!
-[nltk_data] Downloading package rslp to /home/larissa/nltk_data...
-[nltk_data]   Package rslp is already up-to-date!
-[nltk_data] Downloading package punkt to /home/larissa/nltk_data...
-[nltk_data]   Package punkt is already up-to-date!
 # parser
 
 ## tokenize_text
@@ -105,7 +98,7 @@ Extract text from a url's html using BeautifulSoup Module. The output is a Beaut
 
 __Input:__
 
-    - url (str): a url string.
+    - url (str): an url string.
 
 __Output:__
 
@@ -120,7 +113,7 @@ Extract text from url's html and returns a list of the strings present on it.
 
 __Input:__
 
-    - url (str): a url string.
+    - url (str): an url string.
 
 __Output:__
 
@@ -131,11 +124,11 @@ __Output:__
 Parser.crawler(self, url, limit=10)
 ```
 
-Receives a url and returns a list of links (another urls)  present on its html.
+Receives an url and returns a list of links (another urls)  present on its html.
 
 __Input:__
 
-    - url (str): a url string.
+    - url (str): an url string.
     - limit (int, 10): a int number, referring to the maximum of links to return. Default value: 10.
 
 __Output:__
@@ -147,11 +140,11 @@ __Output:__
 Parser.parse(self, url)
 ```
 
-Receives a url and returns a list of strings extracted from its html already preprocessed (see Parse.preprocess for more information).
+Receives an url and returns a list of strings extracted from its html already preprocessed (see Parse.preprocess for more information).
 
 __Input:__
 
-    - url (str): a url string.
+    - url (str): an url string.
 
 __Output:__
 
