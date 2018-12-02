@@ -12,6 +12,7 @@ from nltk import tokenize
 import spacy
 import string, re
 
+
 def tokenize_text(sentences):
     """
     Receives a list of sentences, ie. a sequence of words and returns a  tokenized version of it.
@@ -146,7 +147,7 @@ class Parser:
                 - url (str): an url string.
 
             # Output:
-                -text (list): a list ofstrings extracted from the url's html. 
+                -text (list): a list of strings extracted from the url's html. 
         """
         soup = self.extract(url)
         if soup is None:

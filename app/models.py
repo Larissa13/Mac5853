@@ -19,7 +19,6 @@ class Request(db.Model):
 class Keyword(db.Model):
     __tablename__ = 'keyword'
     word = db.Column(db.String(50), primary_key=True)
-    #vector = db.Column(ARRAY(db.Float), nullable=False)
 
     label_name = db.Column(db.String(50), db.ForeignKey('label.name'))
     requests = db.relationship(Request, backref='keywords', secondary=request_keyword)

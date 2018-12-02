@@ -9,6 +9,10 @@
 * Serviços ilegais
 * Urls permitidas (isto é sem conteúdo ilegal)
 
+## Vídeo Tutorial:
+[Video](https://youtu.be/VBbEqRvOvDI)
+
+
 ## Como instalar o sistema
 
 Para instalar o sistema execute em um terminal
@@ -116,4 +120,7 @@ Na pasta do projeto, execute `pytest` .
 Depois, abra a pasta app com `cd app` e execute o comando `pytest` .
 
 Caso queira executar cada teste separadamente, faça `python [nome do arquivo de teste].py` .
+
+
+
 
